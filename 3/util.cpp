@@ -27,32 +27,20 @@ int typeAcc(void)
 
 int searchSavingAccount(int num)
 {
-	Sav_acct acc, search_acc;
+	Sav_acct acc;
 
-	search_acc.setNumber(num);
 	ifstream file("savingaccount.dat", ios::binary);
-	file.seekg(0, ios::beg);
-
 	if (!file.is_open())
-		cout << "Error opening File!" << endl;
-	else
 	{
-		while (file.read(reinterpret_cast<char*>(&acc), sizeof(acc)))
-		{
-			if (acc.getNumber() == search_acc.getNumber())
-			{
-				cout << "Found object!" << endl;
-				break;
-			}
-			//if (acc.getNumber() == num)
-			//{
-				//acc.display();
-			//	break;
-			//}
-		}
-		if (!file.eof())
-			cout << "No such record!" << endl;
-		file.close();
+		cerr << "Error: failed to open file" << endl;
+		return (-1);
 	}
+	while (file.read(reinterpret_cast<char*>(&acc), sizeof(acc)))
+	{
+		cout << "Acc no:" << acc.getNumber() << endl;
+		/* code */
+	}
+	
+	file.close();
 	return (0);
 }
