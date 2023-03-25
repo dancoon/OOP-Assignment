@@ -4,6 +4,8 @@ void Curr_acct::newCurrentAccount(void)
 {
 	int flag = 0;
 
+	system("cls");
+	cout << "ADD NEW CUSTOMER:" << endl;
 	cout << "Enter customer name: ";
 	cin >> customerName;
 	cout << "Enter Account number: ";
@@ -20,24 +22,30 @@ void Curr_acct::newCurrentAccount(void)
 	}
 	if (flag == 0)
 		cout << "Error in writing to the database" << endl;
+	else
+		cout << "Account created !!!\nAccount number: "<< (*this).number << endl << "Customer's name: " << (*this).customerName << endl;
+	system("pause");
 }
 
 void Curr_acct::depositCurrentAccount(void)
 {
-	int flag = 0;
+	int flag = 0, num;
 	fstream file;
-	int num;
 	double amt;
-
+	
+	system("cls");
+	cout << "DEPOSIT AMOUNT !!!" << endl;
 	cout << "Enter account number: ";
 	cin >> num;
-
 	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
 	file.seekg(0);
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{
 		if ((*this).number == num)
 		{
+			system("cls");
+			cout << "Customer name: " << (*this).customerName << endl;
+			cout << "Account number: " << (*this).number << endl;
 			cout << "Enter amount to be deposited: ";
 			cin >> amt;
 			file.seekp(-sizeof(*this), ios::cur);
@@ -47,11 +55,11 @@ void Curr_acct::depositCurrentAccount(void)
 		}
 	}
 	if (flag == 0)
-	{
-		cout << "Account not found!" << endl;
-	}
-	
+		cout << "Error!!! Account not found !!!" << endl;
+	else
+		cout << "Amount deposited !!!" << endl;
 	file.close();
+	system("pause");
 }
 
 void Curr_acct::withdrawCurrentAccount(void)
@@ -59,30 +67,46 @@ void Curr_acct::withdrawCurrentAccount(void)
 	int flag = 0;
 	fstream file;
 	int num;
-	double amt;
+	double amt, money, new_balance;
 
+	system("cls");
+	cout << "WITHDRAW AMOUNT FROM ACCOUNT !!!" << endl;
 	cout << "Enter account number: ";
 	cin >> num;
 
 	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
+	if (!file.is_open())
+	{
+		cout << "Could not open file !!!" << endl;
+		return;
+	}
 	file.seekg(0);
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{
 		if ((*this).number == num)
 		{
+			system("cls");
+			cout << "Customer name: " << (*this).customerName << endl;
+			cout << "Account number: " << (*this).number << endl;
 			cout << "Enter amount to be withdrawn: ";
 			cin >> amt;
+			money = amt;
+			if ((*this).balance < MIN_BALANCE)
+				money = (SURCHARGE * amt) + amt;
+			new_balance = (*this).balance -= money;
+			(*this).setBalance(new_balance);
 			file.seekp(-sizeof(*this), ios::cur);
-			(*this).withdraw(amt);
 			file.write(reinterpret_cast<char*>(this), sizeof(*this));
 			flag = 1;
+			break;
 		}
 	}
 	if (flag == 0)
-	{
 		cout << "Account not found!" << endl;
-	}
+	else
+		cout << "Amount withdrawn !!!" << endl << "New balance: " << (*this).balance << endl;
 	file.close();
+	system("pause");
 }
 
 void Curr_acct::checkBalanceCurrentAccount(void)
@@ -94,23 +118,25 @@ void Curr_acct::checkBalanceCurrentAccount(void)
 		cerr << "Error: failed to open file" << endl;
 		return;
 	}
+		system("cls");
+	cout << "CHECK BALANCE !!!" << endl;
 	cout << "Enter Account number" << endl;
 	cin >> num;
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{
 		if ((*this).number == num)
 		{
-			cout << "Acc no:" << (*this).getNumber() << endl;
-			cout << "Amount:" << (*this).balance <<endl;
+			cout << "Customer's name: " << (*this).customerName << endl;
+			cout << "Account no: " << (*this).getNumber() << endl;
+			cout << "Amount: " << (*this).balance <<endl;
 			flag = 1;
 			break;
 		}
 	}
 	if (file.eof() && flag == 0)
-	{
 		cout << "Account not found" << endl;
-	}
 	file.close();
+	system("pause");
 }
 
 void Curr_acct::listCurrentAccount(void)
@@ -140,6 +166,8 @@ void Curr_acct::deleteCurrentAccount(void)
 		cerr << "Error: failed to open file" << endl;
 		return;
 	}
+	system("cls");
+	cout << "DELETE ACCOUNT !!!";
 	cout << "Enter account number to delete: ";
 	cin >> num;
 	ofstream new_file("temp.dat", ios::binary | ios::app);
@@ -173,6 +201,8 @@ void Curr_acct::updateCurrentAccount(void)
 	double amt;
 	char name[256];
 
+	system("cls");
+	cout << "UPDATE CUSTOMER'S DETAILS !!!" << endl;
 	cout << "Enter account number: ";
 	cin >> num;
 

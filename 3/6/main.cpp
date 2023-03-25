@@ -12,7 +12,6 @@ int main(void)
 	while (run)
 	{
 		opt = option();
-		system("cls");
 		switch (opt)
 		{
 			case 1:
@@ -44,10 +43,8 @@ int main(void)
 					savAcct.checkBalanceSavingAccount();
 				break;
 			case 5:
-				system("cls");
 				savAcct.listSavingAccount();
 				currAcct.listCurrentAccount();
-				system("pause");
 				break;
 			case 6:
 				n = typeAcc();

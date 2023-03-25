@@ -1,19 +1,17 @@
-#include "Sav_Acct.hpp"
+#include "Curr_Acct.hpp"
 
-void Sav_acct::newSavingAccount(void)
+void Curr_acct::newCurrentAccount(void)
 {
 	int flag = 0;
 
-	system("cls");
-	cout << "ADD NEW CUSTOMER:" << endl;
 	cout << "Enter customer name: ";
 	cin >> customerName;
 	cout << "Enter Account number: ";
 	cin >> number;
-	type = 's';
-	chequebook = false;
+	type = 'c';
+	chequebook = true;
 
-	ofstream file("savingaccount.dat", ios::binary | ios::app);
+	ofstream file("currentaccount.dat", ios::binary | ios::app);
 	if (file.is_open())
 	{
 		file.write((char*)this, sizeof(*this));
@@ -22,31 +20,24 @@ void Sav_acct::newSavingAccount(void)
 	}
 	if (flag == 0)
 		cout << "Error in writing to the database" << endl;
-	else
-		cout << "Account created !!!\nAccount number: "<< (*this).number << endl << "Customer's name: " << (*this).customerName << endl;
-	system("pause");
-}	
+}
 
-void Sav_acct::depositSavingAccount(void)
+void Curr_acct::depositCurrentAccount(void)
 {
-	int flag = 0, num;
+	int flag = 0;
 	fstream file;
+	int num;
 	double amt;
 
-	system("cls");
-	cout << "DEPOSIT AMOUNT !!!" << endl;
 	cout << "Enter account number: ";
 	cin >> num;
 
-	file.open("savingaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
+	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
 	file.seekg(0);
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{
 		if ((*this).number == num)
 		{
-			system("cls");
-			cout << "Customer name: " << (*this).customerName << endl;
-			cout << "Account number: " << (*this).number << endl;
 			cout << "Enter amount to be deposited: ";
 			cin >> amt;
 			file.seekp(-sizeof(*this), ios::cur);
@@ -56,75 +47,60 @@ void Sav_acct::depositSavingAccount(void)
 		}
 	}
 	if (flag == 0)
-		cout << "Error!!! Account not found!" << endl;
-	else
-		cout << "Amount deposited !!!" << endl;
+	{
+		cout << "Account not found!" << endl;
+	}
+	
 	file.close();
-	system("pause");
 }
 
-void Sav_acct::withdrawSavingAccount(void)
+void Curr_acct::withdrawCurrentAccount(void)
 {
 	int flag = 0;
 	fstream file;
 	int num;
 	double amt;
 
-	system("cls");
-	cout << "WITHDRAW AMOUNT FROM ACCOUNT !!!" << endl;
 	cout << "Enter account number: ";
 	cin >> num;
 
-	file.open("savingaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
-	if (!file.is_open())
-	{
-		cout << "Could not open file !!!" << endl;
-		return;
-	}
+	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
 	file.seekg(0);
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{
 		if ((*this).number == num)
 		{
-			system("cls");
-			cout << "Customer name: " << (*this).customerName << endl;
-			cout << "Account number: " << (*this).number << endl;
 			cout << "Enter amount to be withdrawn: ";
 			cin >> amt;
-			(*this).setBalance(amt);
 			file.seekp(-sizeof(*this), ios::cur);
+			(*this).withdraw(amt);
 			file.write(reinterpret_cast<char*>(this), sizeof(*this));
 			flag = 1;
-			break;
 		}
 	}
 	if (flag == 0)
+	{
 		cout << "Account not found!" << endl;
-	else
-		cout << "Amount withdrawn !!!" << endl << "New balance: " << (*this).balance << endl;
+	}
 	file.close();
-	system("pause");
 }
 
-void Sav_acct::checkBalanceSavingAccount(void)
+void Curr_acct::checkBalanceCurrentAccount(void)
 {
 	int flag = 0, num;
-	ifstream file("savingaccount.dat", ios::binary);
+	ifstream file("currentaccount.dat", ios::binary);
 	if (!file.is_open())
 	{
 		cerr << "Error: failed to open file" << endl;
 		return;
 	}
-	system("cls");
-	cout << "CHECK BALANCE !!!" << endl;
 	cout << "Enter Account number" << endl;
 	cin >> num;
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{
 		if ((*this).number == num)
 		{
-			cout << "Customer's name: " << (*this).customerName << endl;
-			cout << "Account no: " << (*this).getNumber() << endl;
+			cout << "Acc no:" << (*this).getNumber() << endl;
 			cout << "Amount:" << (*this).balance <<endl;
 			flag = 1;
 			break;
@@ -135,13 +111,12 @@ void Sav_acct::checkBalanceSavingAccount(void)
 		cout << "Account not found" << endl;
 	}
 	file.close();
-	system("pause");
 }
 
-void Sav_acct::listSavingAccount(void)
+void Curr_acct::listCurrentAccount(void)
 {
 	int flag = 0;
-	ifstream file("savingaccount.dat", ios::binary);
+	ifstream file("currentaccount.dat", ios::binary);
 	if (!file.is_open())
 	{
 		cerr << "Error: failed to open file" << endl;
@@ -155,18 +130,16 @@ void Sav_acct::listSavingAccount(void)
 	}
 }
 
-void Sav_acct::deleteSavingAccount(void)
+void Curr_acct::deleteCurrentAccount(void)
 {
 	int flag = 0, num;
-	ifstream file("savingaccount.dat", ios::binary);
+	ifstream file("currentaccount.dat", ios::binary);
 	file.seekg(0, ios::beg);
 	if (!file.is_open())
 	{
 		cerr << "Error: failed to open file" << endl;
 		return;
 	}
-	system("cls");
-	cout << "DELETE ACCOUNT !!!";
 	cout << "Enter account number to delete: ";
 	cin >> num;
 	ofstream new_file("temp.dat", ios::binary | ios::app);
@@ -186,13 +159,13 @@ void Sav_acct::deleteSavingAccount(void)
 	}
 	else
 	{
-		remove("savingaccount.dat");
-		rename("temp.dat", "savingaccount.dat");
+		remove("currentaccount.dat");
+		rename("temp.dat", "currentaccount.dat");
 		cout << "Account successfully deleted" << endl;
 	}
 }
 
-void Sav_acct::updateSavingAccount(void)
+void Curr_acct::updateCurrentAccount(void)
 {
 	int flag = 0;
 	fstream file;
@@ -200,12 +173,10 @@ void Sav_acct::updateSavingAccount(void)
 	double amt;
 	char name[256];
 
-	system("cls");
-	cout << "UPDATE CUSTOMER'S DETAILS !!!" << endl;
 	cout << "Enter account number: ";
 	cin >> num;
 
-	file.open("savingaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
+	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
 	file.seekg(0);
 	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 	{

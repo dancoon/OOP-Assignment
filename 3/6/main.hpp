@@ -5,7 +5,6 @@
 #include "Curr_Acct.hpp"
 #include "Sav_Acct.hpp"
 #include <string.h>
-#include <stdlib.h>
 
 int option(void);
 int typeAcc(void);
