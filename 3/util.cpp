@@ -37,10 +37,44 @@ int searchSavingAccount(int num)
 	}
 	while (file.read(reinterpret_cast<char*>(&acc), sizeof(acc)))
 	{
-		cout << "Acc no:" << acc.getNumber() << endl;
+		if (acc.getNumber() == num)
+		{
+			cout << "Acc no:" << acc.getNumber() << endl;
+			break;
+		}
 		/* code */
 	}
-	
+	if (file.eof())
+	{
+		cout << "Account not found" << endl;
+	}
+	file.close();
+	return (0);
+}
+
+int searchCurrentAccount(int num)
+{
+	Curr_acct acc;
+
+	ifstream file("currentaccount.dat", ios::binary);
+	if (!file.is_open())
+	{
+		cerr << "Error: failed to open file" << endl;
+		return (-1);
+	}
+	while (file.read(reinterpret_cast<char*>(&acc), sizeof(acc)))
+	{
+		if (acc.getNumber() == num)
+		{
+			cout << "Acc no:" << acc.getNumber() << endl;
+			break;
+		}
+		/* code */
+	}
+	if (file.eof())
+	{
+		cout << "Account not found" << endl;
+	}
 	file.close();
 	return (0);
 }

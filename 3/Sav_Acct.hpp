@@ -12,5 +12,11 @@ class Sav_acct:public Account
 	public:
 		void newSavingAccount(void);
 		void depositSavingAccount(void);
+		void withdrawSavingAccount(void);
+		void checkBalanceSavingAccount(void);
+		void listSavingAccount(void);
+		void deleteSavingAccount(void);
+		void updateSavingAccount(void);
+		int searchSavingAccount(int num);
 };
 #endif

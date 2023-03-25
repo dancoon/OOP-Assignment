@@ -5,34 +5,36 @@ Account::Account()
 	balance = 10;
 }
 
-Account::Account(string name, string number, char t, double balance, bool chqbook)
+Account::Account(char name[256], string number, char t, double balance, bool chqbook)
 {
-	customerName = name;
+	strcpy(customerName, name);
 	number = number;
 	type = type;
 	balance = balance;
 	chequebook = chqbook;
 }
 
-void Account::deposit(void)
+void Account::deposit(int amt)
 {
-	int amt;
-
-	cout << "Enter amount to deposit: ";
-	cin >> amt;
 	balance += amt;
+}
+void Account::withdraw(int amt)
+{
+	balance -= amt;
+}
+string Account::getName(void)
+{
+	return customerName;
 }
 void Account::display(void)
 {
 	cout << "Customer's name: " << customerName << endl;
 	cout << "Account number: " << number << endl;
 	cout << "Account type: ";
-	if (type = 's')
+	if (type == 's')
 		cout << "Saving account" << endl;
-	else if (type == 'c')
+	else 
 		cout << "Current account" << endl;
-	else
-		cout << "" << endl;
 	cout << "Balance: " << balance << endl;
 }
 
@@ -46,9 +48,9 @@ int Account::getNumber(void)
 	return number;
 }
 
-void Account::setCustomerName(string name)
+void Account::setCustomerName(char* name)
 {
-	customerName = name;
+	strcpy(customerName, name);
 }
 void Account::setNumber(int number)
 {

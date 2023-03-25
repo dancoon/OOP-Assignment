@@ -8,6 +8,8 @@
 
 int option(void);
 int typeAcc(void);
+
 int searchSavingAccount(int num);
+int searchCurrentAccount(int num);
 
 #endif

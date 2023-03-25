@@ -2,25 +2,28 @@
 #define _ACCOUNT_HPP_
 
 #include <iostream>
+#include <string.h>
 
 using namespace std;
 
 class Account
 {
 	protected:
-		string customerName;
+		char customerName[256];
 		int number;
 		char type;
 		double balance;
 		bool chequebook;
 	public:
 		Account();
-		Account(string name, string number, char t, double balance, bool chqbook);
-		void deposit(void);
+		Account(char* name, string number, char t, double balance, bool chqbook);
+		void deposit(int amt);
+		void withdraw(int amt);
 		void display(void);
 		int getNumber(void);
+		string getName(void);
 		double getBalance(void);
-		void setCustomerName(string name);
+		void setCustomerName(char* name);
 		void setNumber(int number);
 		void setType(char type);
 		void setBalance(double balance);
