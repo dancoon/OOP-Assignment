@@ -43,8 +43,8 @@ int main(void)
 					savAcct.checkBalanceSavingAccount();
 				break;
 			case 5:
-				savAcct.listSavingAccount();
 				currAcct.listCurrentAccount();
+				savAcct.listSavingAccount();
 				break;
 			case 6:
 				n = typeAcc();
