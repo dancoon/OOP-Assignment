@@ -5,14 +5,6 @@ Account::Account()
 	balance = 0;
 }
 
-Account::Account(char name[256], string number, char t, double balance, bool chqbook)
-{
-	strcpy(customerName, name);
-	number = number;
-	type = type;
-	balance = balance;
-	chequebook = chqbook;
-}
 void Account::deposit(int amt)
 {
 	balance += amt;
