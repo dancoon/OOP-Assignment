@@ -16,7 +16,6 @@ class Account
 		bool chequebook;
 	public:
 		Account();
-		Account(char* name, string number, char t, double balance, bool chqbook);
 		void deposit(int amt);
 		void withdraw(int amt);
 		void display(void);
