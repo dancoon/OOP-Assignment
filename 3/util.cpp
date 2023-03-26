@@ -11,7 +11,6 @@ int option(void)
 		cout << "Choose your option: ";
 		cin >> opt;
 	} while (opt < 1 || opt > 8);
-
 	return (opt);
 }
 
