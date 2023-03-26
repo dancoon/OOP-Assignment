@@ -18,7 +18,6 @@ student_t *getData(void)
 	cin >> std->address;
 	cout << "Enter number of units registered: ";
 	cin >> n;
-
 	std->unitsRegistered = getUnitsRegistered(n);
 	std->unitsMarks = getMarks(n);
 
@@ -176,6 +175,7 @@ float lowestMarks(student_t *std[])
 {
 	int i;
 	float mark, min = computeMean(std[0]);
+	
 	for (i = 1; i < MAX_STUDENTS; i++)
 	{
 		mark = computeMean(std[i]);
@@ -194,4 +194,3 @@ float computeD(student_t *std, float mean)
 	d = pow(x, 2);
 	return (d);
 }
-
