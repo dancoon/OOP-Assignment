@@ -21,13 +21,8 @@ class Account
 		void withdraw(int amt);
 		void display(void);
 		int getNumber(void);
-		string getName(void);
-		double getBalance(void);
 		void setCustomerName(char* name);
-		void setNumber(int number);
-		void setType(char type);
 		void setBalance(double balance);
-		void setChequeBook(bool chequeBook);
 };
 
 #endif
