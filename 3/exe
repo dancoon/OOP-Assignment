@@ -1,3 +1,2 @@
 #!/bin/bash
-g++ *.cpp && ./a.out
-
+g++ *.cpp && ./bank
