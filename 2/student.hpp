@@ -1,13 +1,12 @@
 #ifndef _STUDENT_HPP_
 #define _STUDENT_HPP_
 
+#define MAX_STUDENTS 10
 #include <iostream>
 #include <cstring>
 #include <math.h>
 
 using namespace std;
-
-#define MAX_STUDENTS 10
 
 typedef struct student 
 {
@@ -33,6 +32,4 @@ float computeD(student_t *std, float mean);
 float lowestMarks(student_t *std[]);
 float highestMarks(student_t *std[]);
 
-
 #endif
-
