@@ -70,7 +70,7 @@ int main(void)
 				(f == 'y' || f == 'Y')? run = false: run = true;
 				break;
 			default:
-				cout << "System error 104!!" << endl;
+				cout << "System error 104!!!" << endl;
 				exit(1);
 		}
 	}
