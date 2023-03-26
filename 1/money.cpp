@@ -1,9 +1,8 @@
 #include <iostream>
 #include <math.h>
+#define RATE 0.16
 
 using namespace std;
-
-#define RATE 0.16
 
 int menu(string name, string reg);
 double simpleInterest(double deposit, int years);
@@ -103,4 +102,3 @@ double compoundFormula(double deposit, int years)
 	amt = deposit * pow((1 + RATE), years);
 	return (amt);
 }
-
