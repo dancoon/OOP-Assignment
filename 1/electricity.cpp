@@ -24,7 +24,6 @@ int main(void)
 	cout << "---------------------------" << endl;
 	cout << "User: " + name << endl;
 	cout << "Charges: " << amount << endl;
-	
 	return (0);
 }
 
