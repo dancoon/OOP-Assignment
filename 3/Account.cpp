@@ -2,7 +2,7 @@
 
 Account::Account()
 {
-	balance = 10;
+	balance = 0;
 }
 
 Account::Account(char name[256], string number, char t, double balance, bool chqbook)
