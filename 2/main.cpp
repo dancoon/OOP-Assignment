@@ -6,9 +6,7 @@ int main(void)
 	student_t *students[MAX_STUDENTS];
 
 	for (i = 0; i < MAX_STUDENTS; i++)
-	{
 		students[i] = NULL;
-	}
 	
 	for (i = 0; i < MAX_STUDENTS; i++)
 	{
@@ -29,9 +27,7 @@ int main(void)
 	cout << "The lowest mark is: " << lowestMarks(students) << endl;
 	cout << "The highest mark is: " << highestMarks(students) << endl;
 	for (i = 0; i < MAX_STUDENTS; i++)
-	{
 		deleteStudent(students[i]);
-	}
+
 	return (0);
 }
-
