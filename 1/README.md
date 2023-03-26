@@ -1,4 +1,5 @@
 ## Assignment 1 ##
+
 ### Task 1 ###
 Write a C++ program that gives user an option to deposit money in saving or fixed account. The program then compute and display the amount and interest that accrues on staying in the bank for a number of years. Assume a rate of 16%. The options are inform of menus with the header underline whose content is the name of the student and registration number. The input options are the 1. Saving Account 2. Fixed deposit Account and the output well described:
 The Principle: .........
