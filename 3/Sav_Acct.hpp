@@ -19,4 +19,5 @@ class Sav_acct:public Account
 		void updateSavingAccount(void);
 		int searchSavingAccount(int num);
 };
+
 #endif
