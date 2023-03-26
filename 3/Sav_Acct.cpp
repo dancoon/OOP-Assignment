@@ -39,27 +39,30 @@ void Sav_acct::depositSavingAccount(void)
 	cin >> num;
 
 	file.open("savingaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
-	file.seekg(0);
-	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
+	if (file.is_open())
 	{
-		if ((*this).number == num)
+		file.seekg(0);
+		while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 		{
-			system("cls");
-			cout << "Customer name: " << (*this).customerName << endl;
-			cout << "Account number: " << (*this).number << endl;
-			cout << "Enter amount to be deposited: ";
-			cin >> amt;
-			file.seekp(-sizeof(*this), ios::cur);
-			(*this).deposit(amt);
-			file.write(reinterpret_cast<char*>(this), sizeof(*this));
-			flag = 1;
+			if ((*this).number == num)
+			{
+				system("cls");
+				cout << "Customer name: " << (*this).customerName << endl;
+				cout << "Account number: " << (*this).number << endl;
+				cout << "Enter amount to be deposited: ";
+				cin >> amt;
+				file.seekp(-sizeof(*this), ios::cur);
+				(*this).deposit(amt);
+				file.write(reinterpret_cast<char*>(this), sizeof(*this));
+				flag = 1;
+			}
 		}
+		file.close();
 	}
 	if (flag == 0)
 		cout << "Error!!! Account not found!" << endl;
 	else
 		cout << "Amount deposited !!!" << endl;
-	file.close();
 	system("pause");
 }
 
@@ -206,24 +209,23 @@ void Sav_acct::updateSavingAccount(void)
 	cin >> num;
 
 	file.open("savingaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
-	file.seekg(0);
-	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
+	if (file.is_open())
 	{
-		if ((*this).number == num)
+		file.seekg(0);
+		while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 		{
-			cout << "Enter customer's new name: ";
-			cin >> name;
-
-			file.seekp(-sizeof(*this), ios::cur);
-			(*this).setCustomerName(name);
-			file.write(reinterpret_cast<char*>(this), sizeof(*this));
-			flag = 1;
+			if ((*this).number == num)
+			{
+				cout << "Enter customer's new name: ";
+				cin >> name;
+				file.seekp(-sizeof(*this), ios::cur);
+				(*this).setCustomerName(name);
+				file.write(reinterpret_cast<char*>(this), sizeof(*this));
+				flag = 1;
+			}
 		}
+		file.close();
 	}
 	if (flag == 0)
-	{
 		cout << "Account not found!" << endl;
-	}
-	
-	file.close();
 }
