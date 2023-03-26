@@ -10,7 +10,6 @@
 
 class Curr_acct:public Account
 {
-	private:
 	public:
 		void newCurrentAccount(void);
 		void depositCurrentAccount(void);
