@@ -38,26 +38,29 @@ void Curr_acct::depositCurrentAccount(void)
 	cout << "Enter account number: ";
 	cin >> num;
 	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
-	file.seekg(0);
-	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
+	if (file.is_open())
 	{
-		if ((*this).number == num)
+		file.seekg(0);
+		while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 		{
-			system("cls");
-			cout << "Customer name: " << (*this).customerName << endl;
-			cout << "Account number: " << (*this).number << endl;
-			cout << "Enter amount to be deposited: ";
-			cin >> amt;
-			file.seekp(-sizeof(*this), ios::cur);
-			(*this).deposit(amt);
-			file.write(reinterpret_cast<char*>(this), sizeof(*this));
-			flag = 1;
+			if ((*this).number == num)
+			{
+				system("cls");
+				cout << "Customer name: " << (*this).customerName << endl;
+				cout << "Account number: " << (*this).number << endl;
+				cout << "Enter amount to be deposited: ";
+				cin >> amt;
+				file.seekp(-sizeof(*this), ios::cur);
+				(*this).deposit(amt);
+				file.write(reinterpret_cast<char*>(this), sizeof(*this));
+				flag = 1;
+			}
 		}
+		if (flag == 0)
+			cout << "Error!!! Account not found !!!" << endl;
+		else
+			cout << "Amount deposited !!!" << endl;
 	}
-	if (flag == 0)
-		cout << "Error!!! Account not found !!!" << endl;
-	else
-		cout << "Amount deposited !!!" << endl;
 	file.close();
 	system("pause");
 }
@@ -112,6 +115,7 @@ void Curr_acct::withdrawCurrentAccount(void)
 void Curr_acct::checkBalanceCurrentAccount(void)
 {
 	int flag = 0, num;
+
 	ifstream file("currentaccount.dat", ios::binary);
 	if (!file.is_open())
 	{
@@ -171,15 +175,18 @@ void Curr_acct::deleteCurrentAccount(void)
 	cout << "Enter account number to delete: ";
 	cin >> num;
 	ofstream new_file("temp.dat", ios::binary | ios::app);
-	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
+	if (new_file.is_open())
 	{
-		if((*this).number == num)
-			flag++;
-		else
-			new_file.write(reinterpret_cast<char*>(this), sizeof(*this));
+		while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
+		{
+			if((*this).number == num)
+				flag++;
+			else
+				new_file.write(reinterpret_cast<char*>(this), sizeof(*this));
+		}
+		file.close();
+		new_file.close();
 	}
-	file.close();
-	new_file.close();
 	if (flag == 0)
 	{
 		remove("temp.dat");
@@ -207,24 +214,24 @@ void Curr_acct::updateCurrentAccount(void)
 	cin >> num;
 
 	file.open("currentaccount.dat", ios::in | ios::out | ios::binary | ios::ate);
-	file.seekg(0);
-	while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
+	if (file.is_open())
 	{
-		if ((*this).number == num)
+		file.seekg(0);
+		while (file.read(reinterpret_cast<char*>(this), sizeof(*this)))
 		{
-			cout << "Enter customer's new name: ";
-			cin >> name;
+			if ((*this).number == num)
+			{
+				cout << "Enter customer's new name: ";
+				cin >> name;
 
-			file.seekp(-sizeof(*this), ios::cur);
-			(*this).setCustomerName(name);
-			file.write(reinterpret_cast<char*>(this), sizeof(*this));
-			flag = 1;
+				file.seekp(-sizeof(*this), ios::cur);
+				(*this).setCustomerName(name);
+				file.write(reinterpret_cast<char*>(this), sizeof(*this));
+				flag = 1;
+			}
 		}
 	}
 	if (flag == 0)
-	{
 		cout << "Account not found!" << endl;
-	}
-	
 	file.close();
 }
